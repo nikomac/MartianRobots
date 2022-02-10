@@ -15,7 +15,7 @@ If **needed** you can use a migration file to create the DB in any other server 
  2. Open the `Package Manager Console` and set the default project to `MartianRobots.Repository`
  3. Execute `update-database` to create all the necessary tables to run this app.
 
-**CAUTION** If deployed locally using Docker remember it and you have the DB locally as well, the docker app will not have access to the DB using `localhost` routes.
+**CAUTION** If deployed locally using Docker remember that if you have the DB locally as well, the docker app will not have access to the DB using `localhost` routes.
 
 The Web Api can be tested using swagger, it contains some examples and descriptions of the endpoints.
 
