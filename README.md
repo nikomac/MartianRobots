@@ -16,6 +16,6 @@ If **needed** you can use a migration file to create the DB in any other server 
 **CAUTION** If deployed locally using Docker remember it and you have the DB locally as well, the docker app will not have access to the DB using `localhost` routes.
 
 The Web Api can be tested using swagger, it contains some examples and descriptions of the endpoints.
-Or using this example to run the a mission:
+Or using this example to run a mission:
 
     curl -X POST "hostname:port/Mission" -H  "accept: */*" -H  "Content-Type: application/json" -d "\"5 3\1 1 E\RFRFRFRF\3 2 N\FRRFLLFFRRFLL\0 3 W\LLFFFRFLFL\""
