@@ -2,7 +2,7 @@
 
 Web Api build using .net core 5, the persistence is done using MySql-EF and deployed in Docker.
 It is running now my private server using an external DB from a free hosting site (so please be gentle with the limited connection it offers).
-[MartianRobots API](martianrobots.nikomac.duckdns.org/swagger)
+[MartianRobots API](nikomac.duckdns.org:5000/swagger)
 ## How to run
 
 You may deploy it locally using **Docker** or with a more traditional approach using **ISS**.
