@@ -35,7 +35,7 @@ namespace MartianRobots.Api.Controllers
         [HttpGet("lost")]
         public async Task<IActionResult> GetLost()
         {
-            var robots = await robotRepository.GetAll();
+            var robots = await robotRepository.GetLost();
             var robotsDTO = RobotTranslator.Translate(robots);
             return Ok(robotsDTO);
         }
