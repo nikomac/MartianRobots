@@ -7,15 +7,23 @@ namespace MartianRobots.Common.Entities
     public class Mission
     {
         public Guid ID { get; set; }
-        public List<Coordinate> Scent { get; set; } = new List<Coordinate>();
+        public DateTime Date { get; set; }
+        public List<Coordinate> Scent { get; set; }
 
         public Grid Grid { get; set; }
         public List<Robot> Robots { get; set; }
 
 
+        public Mission()
+        {
+            Date = DateTime.Now;
+            Scent = new List<Coordinate>();
+        }
+
         public void Restart()
         {
             ID = Guid.Empty;
+            Date = DateTime.Now;
             Scent = new List<Coordinate>();
             Robots.ForEach(r => r.Restart());
             Grid.Restart();

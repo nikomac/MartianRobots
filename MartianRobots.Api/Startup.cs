@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace MartianRobots.Api
 {
@@ -26,15 +27,18 @@ namespace MartianRobots.Api
         {
             services.AddDbContext<MartianRobotsDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("MartianRobotsDB")));
 
-            services.AddScoped<IMissionService, MissionService>();
-            services.AddScoped<IGridRepository, GridRepository>();
-            services.AddScoped<IMissionRepository, MissionRepository>();
-            services.AddScoped<IRobotRepository, RobotRepository>();
+            services.AddTransient<IMissionService, MissionService>();
+            services.AddTransient<IGridRepository, GridRepository>();
+            services.AddTransient<IMissionRepository, MissionRepository>();
+            services.AddTransient<IRobotRepository, RobotRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MartianRobots.Api", Version = "v1" });
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "MartianRobots.Api.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
@@ -43,10 +47,11 @@ namespace MartianRobots.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MartianRobots.Api v1"));
+                app.UseDeveloperExceptionPage();               
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MartianRobots.Api v1"));
 
             app.UseHttpsRedirection();
 

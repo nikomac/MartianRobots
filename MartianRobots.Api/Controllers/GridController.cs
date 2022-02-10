@@ -1,10 +1,6 @@
-﻿using MartianRobots.Api.Translators;
-using MartianRobots.Api.Validators;
-using MartianRobots.Common.Exceptions;
+﻿using MartianRobots.Contract.V1.Translators;
 using MartianRobots.Repositories.Interfaces;
-using MartianRobots.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace MartianRobots.Api.Controllers
@@ -22,11 +18,15 @@ namespace MartianRobots.Api.Controllers
             this.gridRepository = gridRepository;
         }
 
+        /// <summary>
+        /// Recovers all grids.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var grids = await gridRepository.GetAll();
-            return Ok(grids);
+            var gridsDTO = GridTranslator.Translate(grids);
+            return Ok(gridsDTO);
         }       
 
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace MartianRobots.Api.Validators
+namespace MartianRobots.Contract.V1.Validators
 {
 
     public class MissionStringAttribute : ValidationAttribute

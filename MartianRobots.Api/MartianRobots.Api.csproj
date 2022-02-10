@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>cd1fa236-17c0-4d5e-ba83-870824210cde</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,10 +15,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MartianRobots.Common\MartianRobots.Common.csproj" />
+    <ProjectReference Include="..\MartianRobots.Contract\MartianRobots.Contract.csproj" />
     <ProjectReference Include="..\MartianRobots.Repositories\MartianRobots.Repositories.csproj" />
     <ProjectReference Include="..\MartianRobots.Services\MartianRobots.Services.csproj" />
   </ItemGroup>

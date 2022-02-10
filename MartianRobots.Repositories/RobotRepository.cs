@@ -4,6 +4,7 @@ using MartianRobots.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MartianRobots.Repositories
 {
@@ -19,6 +20,11 @@ namespace MartianRobots.Repositories
         public async Task<List<Robot>> GetAll()
         {
             return await dbContext.Robots.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<Robot>> GetLost()
+        {
+            return await dbContext.Robots.AsNoTracking().Where(r => r.IsLost).ToListAsync();
         }
 
     }

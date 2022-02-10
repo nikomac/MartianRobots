@@ -1,5 +1,5 @@
-using MartianRobots.Api.Translators;
 using MartianRobots.Common;
+using MartianRobots.Contract.V1.Translators;
 using MartianRobots.Tests.Common;
 using NUnit.Framework;
 using System.Collections.Generic;

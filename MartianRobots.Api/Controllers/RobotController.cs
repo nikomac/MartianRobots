@@ -1,10 +1,6 @@
-﻿using MartianRobots.Api.Translators;
-using MartianRobots.Api.Validators;
-using MartianRobots.Common.Exceptions;
+﻿using MartianRobots.Contract.V1.Translators;
 using MartianRobots.Repositories.Interfaces;
-using MartianRobots.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace MartianRobots.Api.Controllers
@@ -22,12 +18,27 @@ namespace MartianRobots.Api.Controllers
             this.robotRepository = robotRepository;
         }
 
+        /// <summary>
+        /// Recovers all robots.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var robots = await robotRepository.GetAll();
-            return Ok(robots);
-        }       
+            var robotsDTO = RobotTranslator.Translate(robots);
+            return Ok(robotsDTO);
+        }
+
+        /// <summary>
+        /// Recovers lost robots.
+        /// </summary>
+        [HttpGet("lost")]
+        public async Task<IActionResult> GetLost()
+        {
+            var robots = await robotRepository.GetAll();
+            var robotsDTO = RobotTranslator.Translate(robots);
+            return Ok(robotsDTO);
+        }
 
 
     }

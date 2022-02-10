@@ -5,6 +5,7 @@ using MartianRobots.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MartianRobots.Repositories
@@ -21,12 +22,14 @@ namespace MartianRobots.Repositories
 
         public async Task<Mission> Get(Guid id)
         {
-            return await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking().FirstOrDefaultAsync(r => r.ID == id) ?? throw new NotFoundException();
+            return await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking()
+                .FirstOrDefaultAsync(r => r.ID == id) ?? throw new NotFoundException();
         }
 
         public async Task<List<Mission>> GetAll()
         {
-            return await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking().ToListAsync();
+            return await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking()
+                .OrderBy(m => m.Date).ToListAsync();
         }
 
         public async Task<Mission> Insert(Mission mission)
@@ -47,10 +50,14 @@ namespace MartianRobots.Repositories
 
         public async Task<int> Delete(Guid id)
         {
-            var mission = await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking().FirstOrDefaultAsync(r => r.ID == id);
-            dbContext.Missions.Remove(mission);
-            var removed = await dbContext.SaveChangesAsync();
-            return removed;
+            var mission = await dbContext.Missions.Include(m => m.Robots).Include(m => m.Grid).AsNoTracking()
+                .FirstOrDefaultAsync(r => r.ID == id);
+            if (mission != null)
+            {
+                dbContext.Missions.Remove(mission);
+                return await dbContext.SaveChangesAsync();
+            }
+            return 0;
         }
 
     }

@@ -1,10 +1,11 @@
 ﻿using MartianRobots.Common;
 using MartianRobots.Common.Entities;
+using MartianRobots.Contract.V1.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MartianRobots.Api.Translators
+namespace MartianRobots.Contract.V1.Translators
 {
     public static class MissionTranslator
     {
@@ -13,12 +14,38 @@ namespace MartianRobots.Api.Translators
         {
             var missionInput = input.Split('\n');
 
-            return new Mission
+            return new Mission()
             {
                 Grid = TranslateGridInput(missionInput.ElementAtOrDefault(0)),
                 Robots = TranslateRobotInput(missionInput.Skip(1)),
             };
         }
+
+        public static string TranslateOutput(Mission mission)
+        {
+            return string.Join("\n", mission.Robots.Select(robot =>
+                $"{robot.LastKnownCoordinate.X} {robot.LastKnownCoordinate.Y} {robot.LastKnownCoordinate.Orientation}{(robot.IsLost ? " LOST" : "")}"
+            ));
+        }
+
+        public static MissionDTO Translate(Mission mission)
+        {
+            return new MissionDTO
+            {
+                ID = mission.ID,
+                Date = mission.Date,
+                Scent = mission.Scent.Select(x => x.ToString()).ToList(),
+                Grid = GridTranslator.Translate(mission.Grid),
+                Robots = RobotTranslator.Translate(mission.Robots).ToList(),
+            };
+        }
+
+        public static IEnumerable<MissionDTO> Translate(IEnumerable<Mission> missions)
+        {
+            return missions.Select(mission => Translate(mission));
+        }
+
+
 
         private static Grid TranslateGridInput(string input)
         {
@@ -49,14 +76,6 @@ namespace MartianRobots.Api.Translators
                     Instructions = robotI.ToList(),
                 };
             }).ToList();
-        }
-
-
-        public static string TranslateOutput(Mission mission)
-        {
-            return string.Join("\n", mission.Robots.Select(robot =>
-                $"{robot.LastKnownCoordinate.X} {robot.LastKnownCoordinate.Y} {robot.LastKnownCoordinate.Orientation}{(robot.IsLost ? " LOST" : "")}"
-            ));
         }
     }
 }

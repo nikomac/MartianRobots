@@ -47,6 +47,9 @@ namespace MartianRobots.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varbinary(16)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Scent")
                         .HasColumnType("text");
 

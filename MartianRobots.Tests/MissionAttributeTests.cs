@@ -1,5 +1,4 @@
-using MartianRobots.Api.Validators;
-using MartianRobots.Tests.Common;
+using MartianRobots.Contract.V1.Validators;
 using NUnit.Framework;
 using System.Linq;
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MartianRobots.Repositories.Migrations
 {
     [DbContext(typeof(MartianRobotsDbContext))]
-    [Migration("20220209200043_Initial")]
+    [Migration("20220210165646_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,9 @@ namespace MartianRobots.Repositories.Migrations
                     b.Property<byte[]>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varbinary(16)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Scent")
                         .HasColumnType("text");

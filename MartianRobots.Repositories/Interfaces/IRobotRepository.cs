@@ -7,5 +7,8 @@ namespace MartianRobots.Repositories.Interfaces
     public interface IRobotRepository
     {
         public Task<List<Robot>> GetAll();
+
+        public Task<List<Robot>> GetLost();
+
     }
 }

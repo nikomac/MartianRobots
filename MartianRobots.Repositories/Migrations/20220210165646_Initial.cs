@@ -12,6 +12,7 @@ namespace MartianRobots.Repositories.Migrations
                 columns: table => new
                 {
                     ID = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
                     Scent = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

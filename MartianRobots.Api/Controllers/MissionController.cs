@@ -1,6 +1,6 @@
-﻿using MartianRobots.Api.Translators;
-using MartianRobots.Api.Validators;
-using MartianRobots.Common.Exceptions;
+﻿using MartianRobots.Common.Exceptions;
+using MartianRobots.Contract.V1.Translators;
+using MartianRobots.Contract.V1.Validators;
 using MartianRobots.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,14 +21,26 @@ namespace MartianRobots.Api.Controllers
             this.missionService = missionService;
         }
 
+        /// <summary>
+        /// Recovers all missions.
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var missions = await missionService.GetPastMissions();
-            return Ok(missions);
+            var missionsDTO = MissionTranslator.Translate(missions);
+            return Ok(missionsDTO);
         }
 
-
+        /// <summary>
+        /// Runs and saves a mission.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     "5 3\n1 1 E\nRFRFRFRF\n3 2 N\nFRRFLLFFRRFLL\n0 3 W\nLLFFFRFLFL"
+        ///
+        /// </remarks>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody][MissionString] string input)
         {
@@ -39,6 +51,9 @@ namespace MartianRobots.Api.Controllers
             return Ok(output);
         }
 
+        /// <summary>
+        /// Reruns and saves an existing mission.
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> Put(Guid id)
         {
